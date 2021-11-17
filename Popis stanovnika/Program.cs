@@ -22,7 +22,46 @@ namespace Popis_stanovnika
                 {"20234601029", ("Barbara Jugovac", new DateTime (2005, 10, 28)) }
             };
 
+            string choice = "0";
+            bool check = false;
 
+            do
+            {
+                var userChoice = MainMenuChoice(choice);
+
+                switch (userChoice)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "5":
+                        break;
+                    case "6":
+                        break;
+                    case "7":
+                        break;
+                    case "8":
+                        break;
+                    case "9":
+                        break;
+                    case "0":
+                        check = true;
+                        break;
+                    default:
+                        Console.WriteLine("Unijeli ste nevaljanu opciju, molim vas odaberite jednu od dolje navedenih opcija!");
+                        break;
+                }
+
+            } while (check == false);
+        }
+
+        static string MainMenuChoice(string choice)
+        {
             Console.WriteLine("Odaberite akciju:");
             Console.WriteLine("1 - Ispis stanovnistva");
             Console.WriteLine("2 - Ispis stanovnika po OIB-u");
@@ -35,6 +74,9 @@ namespace Popis_stanovnika
             Console.WriteLine("9 - Statiskika");
             Console.WriteLine("0 - Izlaz iz aplikacije");
 
-        }
+            choice = Console.ReadLine();
+
+            return choice;
+         }
     }
 }
