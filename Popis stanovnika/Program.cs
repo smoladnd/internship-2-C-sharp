@@ -45,6 +45,7 @@ namespace Popis_stanovnika
                         IspisPoImenu(populationList);
                         break;
                     case "4":
+                        AddCitisen(populationList);
                         break;
                     case "5":
                         break;
@@ -319,6 +320,100 @@ namespace Popis_stanovnika
 
         }
 
+        static void AddCitisen(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state;
+            string newOib, newNameAndSurname, birthTimeString;
+
+            do
+            {
+                state = false;
+
+                Console.WriteLine("Ako ste sigurni u ovu odluku napisite 'da', ako niste stisnite bilo koji botun");
+                string userChoiceMenu = Console.ReadLine();
+
+                if (userChoiceMenu is "da" || userChoiceMenu is "Da")
+                {
+                    bool oibState = false;
+
+                    do
+                    {
+                        state = false;
+                        Console.WriteLine("Upisite OIB nove osobe:");
+                        newOib = Console.ReadLine();
+
+                        state = CheckOib(newOib);
+                    } while (state is true);
+
+                    if (state is false)
+                        foreach (var item in populationList)
+                            if (item.Key == newOib)
+                            {
+                                oibState = true;
+                                state = true;
+                                break;
+                            }
+
+                    if (oibState is true)
+                    {
+                        Console.WriteLine("OIB koji ste upisali vec postoji na popisu!");
+                        Console.WriteLine("Ako zelite pokusat unijeti novu osobu napisite 'da'.");
+                        Console.WriteLine("Ako se zelite vratiti na pocetni izbornik stisnite bilo koji drugi botun.");
+                        string userChoiseOib = Console.ReadLine();
+
+                        if (userChoiseOib is "da" || userChoiseOib is "Da")
+                            state = false;
+                    }
+
+                    if (state is false)
+                    {
+                        do
+                        {
+                            state = false;
+                            Console.WriteLine("Upisite ime i prezime nove osobe:");
+                            newNameAndSurname = Console.ReadLine();
+
+                            state = false;
+                            state = CheckNameAndSurname(newNameAndSurname);
+                        } while (state is true);
+
+                        if (state is false)
+                        {
+                            do
+                            {
+                                state = false;
+                                Console.WriteLine("Upisite datum rodenja nove osobe:");
+                                birthTimeString = Console.ReadLine();
+
+                                state = CheckDateOfBirth(birthTimeString);
+
+                            } while (state is true);
+
+                            DateTime newDateOfBirth = Convert.ToDateTime(birthTimeString);
+
+                            if (state is false)
+                            {
+                                var citizen = (nameAndSurname: newNameAndSurname, dateOfBirth: newDateOfBirth);
+                                populationList.Add(newOib, citizen);
+
+                                Console.WriteLine("Stanovnik je uspjesno unesen, ako zelite opet unijet nekoga napisite 'da'.");
+                                Console.WriteLine("Ako se zelite vratiti na pocetni izbornik stisnite bilo koju tipku.");
+                                string userChoice = Console.ReadLine();
+
+                                if (userChoice is "da" || userChoice is "Da")
+                                    state = true;
+                                else
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                else
+                    break;
+
+            } while (state is true);
+        }
     }
 
 }
