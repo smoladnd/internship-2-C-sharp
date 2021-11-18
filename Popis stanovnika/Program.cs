@@ -42,6 +42,7 @@ namespace Popis_stanovnika
                         IspisPoOibu(populationList);
                         break;
                     case "3":
+                        IspisPoImenu(populationList);
                         break;
                     case "4":
                         break;
@@ -317,6 +318,7 @@ namespace Popis_stanovnika
             } while (state == true);
 
         }
+
     }
 
 }
