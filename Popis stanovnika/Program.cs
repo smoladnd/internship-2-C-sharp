@@ -48,6 +48,7 @@ namespace Popis_stanovnika
                         AddCitisen(populationList);
                         break;
                     case "5":
+                        EraseCitisenByOib(populationList);
                         break;
                     case "6":
                         break;
@@ -413,6 +414,73 @@ namespace Popis_stanovnika
                     break;
 
             } while (state is true);
+        }
+
+        static void EraseCitisenByOib(Dictionary<string, (string nameAdnSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state = false, checkRemove = false;
+            string newOib, userChoice;
+
+            do
+            {
+                Console.WriteLine("Ako ste sigurni u ovu odluku napisite 'da', ako niste stisnite bilo koji botun");
+                string userChoiceMenu = Console.ReadLine();
+
+                if (userChoiceMenu is "da" || userChoiceMenu is "Da")
+                {
+                    state = false;
+                    if (state is false)
+                    {
+                        do
+                        {
+                            state = false;
+                            Console.WriteLine("Upisite OIB osobe koju zelite obrisat iz popisa:");
+                            newOib = Console.ReadLine();
+
+                            state = CheckOib(newOib);
+                        } while (state is true);
+
+                        if (state is false)
+                        {
+                            foreach (var item in populationList)
+                                if (item.Key == newOib)
+                                {
+                                    populationList.Remove(newOib);
+                                    checkRemove = true;
+                                }
+
+                            if (checkRemove is false)
+                            {
+                                Console.WriteLine("OIB koji ste unijeli ne postoji u popisu.");
+                                Console.WriteLine("AKo zelite pokusat brisat opet napisite 'da'.");
+                                Console.WriteLine("Ako zelite natrag u glavni izbornik stisnite bilo koju tipku.");
+                                userChoice = Console.ReadLine();
+
+                                if (userChoice is "da" || userChoice is "Da")
+                                    state = true;
+                                else
+                                    break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Stanovnik uspjesno izbrisan.");
+                                Console.WriteLine("AKo zelite pokusat brisat opet napisite 'da'.");
+                                Console.WriteLine("Ako zelite natrag u glavni izbornik stisnite bilo koju tipku.");
+                                userChoice = Console.ReadLine();
+
+                                if (userChoice is "da" || userChoice is "Da")
+                                    state = true;
+                                else
+                                    break;
+                            }
+                        }
+                    }
+                    else
+                        break;
+                }
+                
+            } while (state is true);
+
         }
     }
 
