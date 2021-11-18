@@ -115,7 +115,7 @@ namespace Popis_stanovnika
                 Console.WriteLine("1 - Onako kako su spremljeni");
                 Console.WriteLine("2 - Po datumu rođenja uzlazno");
                 Console.WriteLine("3 - Po datumu rođenja silazn");
-                Console.WriteLine("AKo se zelite vratiti na glavni izbornik stisnite bilo koji botun");
+                Console.WriteLine("AKo se zelite vratiti na glavni izbornik stisnite bilo koji drugi botun");
 
                 var choice = Console.ReadLine();
 
@@ -136,15 +136,19 @@ namespace Popis_stanovnika
                             Console.WriteLine($"{item.Key} {item.Value}");
                         break;
                     default:
+                        state = true;
                         break;
                 }
 
-                Console.WriteLine("AKo se zelite vratiti na glavni izbornik stisnite da.");
-                Console.WriteLine("Ako zelite koristiti jos jednu opciju u Ispisu stanovnistva stisnite bilo koji botun.");
-                returnChoice = Console.ReadLine();
+                if (state == false)
+                {
+                    Console.WriteLine("AKo se zelite vratiti na glavni izbornik stisnite da.");
+                    Console.WriteLine("Ako zelite koristiti jos jednu opciju u Ispisu stanovnistva stisnite bilo koji botun.");
+                    returnChoice = Console.ReadLine();
 
-                if (returnChoice == "da" || returnChoice == "Da")
-                    state = true;
+                    if (returnChoice == "da" || returnChoice == "Da")
+                        state = true;
+                }
 
             } while (state == false);
 
