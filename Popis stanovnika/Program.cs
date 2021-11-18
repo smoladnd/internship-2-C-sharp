@@ -20,7 +20,10 @@ namespace Popis_stanovnika
                 {"50453718074", ("Bogdan Stojanović", new DateTime (1965, 09, 15)) },
                 {"17354691849", ("Martina Tomić", new DateTime (2012,  10, 30)) },
                 {"05908685970", ("Igor Pavlović", new DateTime (1983, 06, 03)) },
-                {"06075173965", ("Danica Vinković", new DateTime (1950, 07, 05)) }
+                {"06075173965", ("Danica Vinković", new DateTime (1950, 07, 05)) },
+                {"26458101029", ("Barbara Jugovac", new DateTime (2005, 10, 28)) },
+                {"21347951029", ("Barbara Jugovac", new DateTime (2005, 10, 28)) }
+
             };
 
             string choice = "0";
@@ -82,6 +85,26 @@ namespace Popis_stanovnika
             return choice;
          }
 
+        static bool CheckOib(string oib)
+        {
+            bool OIBState = false;
+
+            if (oib.Length is not 11 && OIBState is false)
+            {
+                Console.WriteLine("Duljina OIB-a nije tocna!");
+                OIBState = true;
+            }
+
+            bool isNumber = long.TryParse(oib, out _);
+            if (isNumber is false && OIBState is false)
+            {
+                Console.WriteLine("OIB vam mora imati samo brojeve u sebi!");
+                OIBState = true;
+            }
+
+            return OIBState;
+        }
+
         static void IspisStanovnistva(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
             string returnChoice;
@@ -138,18 +161,7 @@ namespace Popis_stanovnika
                     Console.WriteLine("Upisite OIB trazene osobe:");
                     string oib = Console.ReadLine();
 
-                    if (oib.Length is not 11 && OIBState is false)
-                    {
-                        Console.WriteLine("Duljina OIB-a nije tocna!");
-                        OIBState = true;
-                    }
-
-                    bool isNumber = long.TryParse(oib, out _);
-                    if (isNumber is false && OIBState is false)
-                    {
-                        Console.WriteLine("OIB vam mora imati samo brojeve u sebi!");
-                        OIBState = true;
-                    }
+                    OIBState = CheckOib(oib);
 
                     if (OIBState is false)
                         foreach (var item in populationList)
@@ -182,7 +194,7 @@ namespace Popis_stanovnika
 
         }
 
-
+        
     }
 
 }
