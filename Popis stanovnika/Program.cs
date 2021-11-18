@@ -138,6 +138,33 @@ namespace Popis_stanovnika
             return state;
         }
 
+        static bool CheckDateOfBirth(string birthTimeString)
+        {
+            int countSpace = 0;
+            bool boolBirthDate = false;
+
+            for (var i = 0; i < birthTimeString.Length; i++)
+            {
+                if (birthTimeString[i] is ' ')
+                    countSpace++;
+                if (birthTimeString[i] >= '0' && birthTimeString[i] <= '9' || birthTimeString[i] is ' ')
+                    boolBirthDate = false;
+                else
+                {
+                    boolBirthDate = true;
+                    Console.WriteLine("Molim vas kada pisete datum rodenja korisite samo arapske brojeve!");
+                    break;
+                }
+            }
+            if (countSpace != 2 && boolBirthDate is false)
+            {
+                Console.WriteLine("Niste datum rodenja upisali u tocnom formatu!");
+                boolBirthDate = true;
+            }
+
+            return boolBirthDate;
+        }
+
         static void IspisStanovnistva(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
             string returnChoice;
@@ -230,6 +257,8 @@ namespace Popis_stanovnika
                 } while (OIBState is true);
 
         }
+
+        
     }
 
 }
