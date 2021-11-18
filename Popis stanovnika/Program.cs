@@ -129,43 +129,46 @@ namespace Popis_stanovnika
 
         static void IspisPoOibu(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
-            bool OIBState = false;
-            long x = 0;
+            bool OIBState, x = false;
           
                 do
                 {
+                    OIBState = false;
+                    
                     Console.WriteLine("Upisite OIB trazene osobe:");
-                    var oib = Console.ReadLine();
+                    string oib = Console.ReadLine();
 
-                    bool isNumber = long.TryParse(oib, out x);
                     if (oib.Length is not 11 && OIBState is false)
                     {
                         Console.WriteLine("Duljina OIB-a nije tocna!");
                         OIBState = true;
                     }
 
-                    else if (x is not 0 && OIBState is false)
+                    bool isNumber = long.TryParse(oib, out _);
+                    if (isNumber is false && OIBState is false)
                     {
                         Console.WriteLine("OIB vam mora imati samo brojeve u sebi!");
                         OIBState = true;
                     }
 
-                    else if (OIBState is false)
+                    if (OIBState is false)
                         foreach (var item in populationList)
                         {
-                            if (oib == item.Key)
+                            if (item.Key == oib)
                             {
                                 Console.WriteLine($"{item.Key} {item.Value}");
                                 Console.WriteLine("Zelite li pretraziti jos jednu osobu? Ako zelite upisite da!");
                                 Console.WriteLine("Ako ne zelite stisnite bilo koju tipku.");
-                                var useOptionAgain = Console.ReadLine();
+                                string useOptionAgain = Console.ReadLine();
 
-                                if (useOptionAgain is not "da" || useOptionAgain is not "Da")
+                                if (useOptionAgain == "da" || useOptionAgain == "Da")
                                     OIBState = true;
-                            }
+                                else
+                                    x = true;
+                            }                            
                         }
 
-                    else
+                    if (OIBState is false && x is false)
                     {
                         Console.WriteLine("OIB koji ste upisali ne postoji u popisu, ako zelite pokusati ponovno napisite da.");
                         Console.WriteLine("Ako se zelite vratiti u glavni izbornik stisnite bilo koju tipku.");
