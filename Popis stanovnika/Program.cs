@@ -105,6 +105,39 @@ namespace Popis_stanovnika
             return OIBState;
         }
 
+        static bool CheckNameAndSurname(string nameSurname)
+        {
+            bool state = false;
+            int countSpace = 0;
+
+            for (int i = 0; i < nameSurname.Length; i++)
+            {
+                if (nameSurname[i] >= 'a' && nameSurname[i] <= 'z' || nameSurname[i] == ' ' || nameSurname[i] >= 'A' && nameSurname[i] <= 'Z')
+                    state = false;
+                else
+                {
+                    state = true;
+                    Console.WriteLine("Molim vas pri upisu imena i prezime koristitie samo latinska slova!");
+                    break;
+                }
+            }
+
+            if (state is false)
+            {
+                for (int i = 0; i < nameSurname.Length; i++)
+                    if (nameSurname[i] == ' ')
+                        countSpace++;
+
+                if (countSpace is 0)
+                {
+                    state = true;
+                    Console.WriteLine("Molim vas kada pisete ime i prezime, pazite da stavite razmak izmedu svakog imena i prezimena.");
+                }
+            }
+
+            return state;
+        }
+
         static void IspisStanovnistva(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
             string returnChoice;
@@ -197,8 +230,6 @@ namespace Popis_stanovnika
                 } while (OIBState is true);
 
         }
-
-        
     }
 
 }
