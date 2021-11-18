@@ -258,7 +258,65 @@ namespace Popis_stanovnika
 
         }
 
-        
+        static void IspisPoImenu(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+
+            bool state, boolBirthDate = false, checkOutput = false;
+
+            do
+            {
+                state = false;
+
+                Console.WriteLine("Upisite ime i prezime osobe koju trazite.");
+                string nameSurname = Console.ReadLine();
+
+                state = CheckNameAndSurname(nameSurname);
+
+                if (state is false)
+                {
+                    string birthTimeString;
+                    do
+                    {
+                        Console.WriteLine("Upisite datum rodenja trazene osobe, molio bih vas da se drzite ovog formata: YYYY-MM-DD");
+                        birthTimeString = (Console.ReadLine());
+
+                        boolBirthDate = CheckDateOfBirth(birthTimeString);
+
+                    } while (boolBirthDate == true);
+
+                    DateTime birthDateTime = Convert.ToDateTime(birthTimeString);
+
+                    if (state is false)
+                        foreach (var item in populationList)
+                            if (item.Value.nameAndSurname == nameSurname && item.Value.dateOfBirth == birthDateTime)
+                            {
+                                Console.WriteLine($"{item.Key}");
+                                checkOutput = true;
+                            }
+
+                    if (checkOutput is true)
+                    {
+                        Console.WriteLine("Zelite li pretraziti jos neko ime, prezime i datum, ako zelite napisite 'da'.");
+                        Console.WriteLine("Ako ne zelite stisnite bilo koji botun.");
+                        string useOptionAgain = Console.ReadLine();
+
+                        if (useOptionAgain == "da" || useOptionAgain == "Da")
+                            state = true;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Ime, prezime i datum rodenja koji ste upisali ne postoje u popisu, ako zelite pokusati ponovno napisite da.");
+                        Console.WriteLine("Ako se zelite vratiti u glavni izbornik stisnite bilo koju tipku.");
+                        var returnChoice = Console.ReadLine();
+
+                        if (returnChoice == "da" || returnChoice == "Da")
+                            state = true;
+                    }
+                }
+            } while (state == true);
+
+        }
     }
 
 }
