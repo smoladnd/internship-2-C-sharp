@@ -957,6 +957,7 @@ namespace Popis_stanovnika
                 switch (switchChoice)
                 {
                     case "1":
+                        check = WorkForcePersentage(check, populationList);
                         break;
                     case "2":
                         break;
@@ -982,6 +983,45 @@ namespace Popis_stanovnika
                         break;
                 }
             } while (check is true);
+        }
+
+        static bool WorkForcePersentage(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            float countAll = 0, countMinor = 0, countMiddle = 0, countSenior = 0, result;
+            DateTime timeNow = DateTime.Now;
+            DateTime minorAge = timeNow.AddYears(-23);
+            DateTime middleAge = timeNow.AddYears(-65);
+            DateTime seniorAge = timeNow.AddYears(-100);
+
+            foreach (var item in populationList)
+            {
+                result = DateTime.Compare(item.Value.dateOfBirth, minorAge);
+
+                if (result > 0)
+                {
+                    countMinor++;
+                }
+                else
+                {
+                    result = DateTime.Compare(item.Value.dateOfBirth, middleAge);
+
+                    if (result < 0)
+                    {
+                        countSenior++;
+                    }
+                    else
+                    {
+                        countMiddle++;
+                    }
+                }
+                countAll++;
+            }
+
+            Console.WriteLine("Postotak nezaposlenih od 0 do 23 godine je " + countMinor / countAll * 100 + "%");
+            Console.WriteLine("Postotak zaposlenih od 23 do 65 godine je " + countMiddle / countAll * 100 + "%");
+            Console.WriteLine("Postotak nezaposlenih od 65 do 100 godine je " + countSenior / countAll * 100 + "%");
+
+            return check = true;
         }
     }
 }
