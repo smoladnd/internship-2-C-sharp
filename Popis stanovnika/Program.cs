@@ -57,6 +57,7 @@ namespace Popis_stanovnika
                         EraseAllCitisens(populationList);
                         break;
                     case "8":
+                        UpdateCitizen(populationList);
                         break;
                     case "9":
                         break;
@@ -630,6 +631,37 @@ namespace Popis_stanovnika
 
             } while (state is true);
         }
+
+        static void UpdateCitizen(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool check;
+
+            do
+            {
+                check = false;
+                Console.WriteLine("1 - Uredi OIB stanovnika");
+                Console.WriteLine("2 - Uredi ime i prezime stanovnika");
+                Console.WriteLine("3 - Uredi datum rođenja");
+                Console.WriteLine("4 - Vracanje na glavni izbornik");
+                var switchChoice = Console.ReadLine();
+
+                switch (switchChoice)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    default:
+                        Console.WriteLine("Unijeli ste nevaljanu opciju, pokusajte ponovno.");
+                        check = true;
+                        break;
+                }
+            } while (check is true);
+        }      
     }
 
 }
