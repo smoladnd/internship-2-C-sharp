@@ -654,6 +654,7 @@ namespace Popis_stanovnika
                         check = UpdateCitisenNameAndSurname(check, populationList);
                         break;
                     case "3":
+                        check = UpdateCitizenDateOfBirth(check, populationList);
                         break;
                     case "4":
                         break;
@@ -846,6 +847,88 @@ namespace Popis_stanovnika
                 else
                     check = true;
             
+            } while (state is true);
+
+            return check;
+        }
+    
+        static bool UpdateCitizenDateOfBirth(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state;
+            string userChoice, oib, holdNameAndSurname, newDateOfBirth;
+
+            do
+            {
+                state = false;
+
+                Console.WriteLine("Ako ste sigurni u ovu odluku napisite 'da'.");
+                Console.WriteLine("Ako se zelite vratiti na izbornik za uredivanje stanovnika stisnite bilo koju tipku.");
+                userChoice = Console.ReadLine();
+
+                if (userChoice is "da" || userChoice is "Da")
+                {
+                    do
+                    {
+                        Console.WriteLine("Upisite OIB trazenog stanovnika.");
+                        oib = Console.ReadLine();
+
+                        state = CheckOib(oib);
+                    } while (state is true);
+
+                    foreach (var item in populationList)
+                    {
+                        if (item.Key == oib)
+                        {
+                            do
+                            {
+                                state = false;
+                                Console.WriteLine("Upisite novi datum rodenja osobe:");
+                                newDateOfBirth = Console.ReadLine();
+
+                                state = CheckDateOfBirth(newDateOfBirth);
+                            } while (state is true);
+
+                            DateTime newDateTime = Convert.ToDateTime(newDateOfBirth);
+
+                            holdNameAndSurname = item.Value.nameAndSurname;
+
+                            populationList.Remove(item.Key);
+
+                            var personValue = (nameAndSurname: holdNameAndSurname, dateOfBirth: newDateTime);
+
+                            populationList.Add(item.Key, personValue);
+
+                            Console.WriteLine("Uspjesno ureden datum rodenja stanovnika.");
+                            Console.WriteLine("Ako zelite urediti jos nekog stanovnika napisite 'da'.");
+                            Console.WriteLine("Ako se zelite vratiti na izbornik za uredivanje stanovnika stisnite bilo koju tipku.");
+                            userChoice = Console.ReadLine();
+
+                            if (userChoice is "da" || userChoice is "Da")
+                                state = true;
+                            else
+                                check = true;
+
+                            break;
+                        }
+                    }
+
+                    if (state is false && check is false)
+                    {
+                        Console.WriteLine("OIB trazenog stanovnika ne postoji u popisu.");
+                        Console.WriteLine("Ako zelite pokusat ponovno uredit necije ime i prezime stisnite 'da'.");
+                        Console.WriteLine("Ako se zelite vratiti na izbornik za uredivanje stanovnika stisnite bilo koju tipku.");
+                        userChoice = Console.ReadLine();
+
+                        if (userChoice is "da" || userChoice is "Da")
+                            state = true;
+                        else
+                            check = true;
+                    }
+                }
+
+                else
+                    check = true;
+
             } while (state is true);
 
             return check;
