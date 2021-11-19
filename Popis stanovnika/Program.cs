@@ -54,6 +54,7 @@ namespace Popis_stanovnika
                         EraseCitisenByValue(populationList);
                         break;
                     case "7":
+                        EraseAllCitisens(populationList);
                         break;
                     case "8":
                         break;
@@ -494,7 +495,7 @@ namespace Popis_stanovnika
             {
                 state = false;
 
-                Console.WriteLine("Ako ste sigurni u ovu radnju napisite 'da', ako se zelite vratiti na poetni izbornik stisnite bilo koju tipku.");
+                Console.WriteLine("Ako ste sigurni u ovu radnju napisite 'da', ako se zelite vratiti na pocetni izbornik stisnite bilo koju tipku.");
                 string userChoice = Console.ReadLine();
 
                 if (userChoice is "da" || userChoice is "Da")
@@ -606,6 +607,28 @@ namespace Popis_stanovnika
                 }
             } while (state is true);
 
+        }
+
+        static void EraseAllCitisens(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state;
+
+            do
+            {
+                state = false;
+
+                Console.WriteLine("Ako ste sigurni u ovu radnju napisite 'da', ako se zelite vratiti na pocetni izbornik stisnite bilo koju tipku.");
+                string userChoice = Console.ReadLine();
+
+                if (userChoice is "da" || userChoice is "Da")
+                {
+                    foreach (var item in populationList)
+                        populationList.Remove(item.Key);
+
+                    Console.WriteLine("Svi stanovnici su uspjesno izbrisani.");
+                }
+
+            } while (state is true);
         }
     }
 
