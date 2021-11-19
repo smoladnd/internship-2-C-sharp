@@ -648,6 +648,7 @@ namespace Popis_stanovnika
                 switch (switchChoice)
                 {
                     case "1":
+                        check = UpdateCitisenOib(check, populationList);
                         break;
                     case "2":
                         break;
@@ -661,7 +662,112 @@ namespace Popis_stanovnika
                         break;
                 }
             } while (check is true);
-        }      
+        }
+
+        static bool UpdateCitisenOib(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state, updateCheck, newOibReedo, mainMenuCheck;
+            string oldOib, newOib, remeberNamAndSurname, userChoice;
+            DateTime rememberDateOfBirth;
+
+            do
+            {
+                state = false;
+                updateCheck = false;
+                mainMenuCheck = false;
+
+                Console.WriteLine("Ako ste sigurni u ovu odluku napisite 'da'.");
+                Console.WriteLine("Ako se zelite vratiti na izbornik za uredivanje stanovnika stisnite bilo koju tipku.");
+                userChoice = Console.ReadLine();
+
+                if (userChoice is "da" || userChoice is "Da")
+                {
+                    do
+                    {
+                        Console.WriteLine("Upisite OIB trazenog stanovnika.");
+                        oldOib = Console.ReadLine();
+
+                        state = CheckOib(oldOib);
+                    } while (state is true);
+
+                    foreach (var item in populationList)
+                        if (item.Key == oldOib)
+                        {
+                            do
+                            {
+                                newOibReedo = false;
+                                do
+                                {
+                                    Console.WriteLine("Upisite novi OIB:");
+                                    newOib = Console.ReadLine();
+
+                                    state = CheckOib(newOib);
+                                } while (state is true);
+
+                                foreach (var thing in populationList)
+                                    if (thing.Key == newOib)
+                                    {
+                                        Console.WriteLine("Novo upisani OIB vec postoji u popisu.");
+                                        Console.WriteLine("Ako zelite pokusat ponovno promjenit OIB iste osobe napisite 'da'.");
+                                        Console.WriteLine("Ako zelite pokusat mijenjat neki drugi OIB napisite 'oib'.");
+                                        Console.WriteLine("Ako se zelite vratiti na izbornik za uredivanje stisnite bilo koji botun.");
+                                        userChoice = Console.ReadLine();
+
+                                        if (userChoice is "da" || userChoice is "Da")
+                                            newOibReedo = true;
+                                        else if (userChoice is "oib" || userChoice is "OIB")
+                                            state = true;
+                                        else
+                                        {
+                                            mainMenuCheck = true;
+                                            check = true;
+                                        }
+                                    }
+                            } while (newOibReedo is true);
+
+                            if (state is false && mainMenuCheck is false)
+                            {
+                                remeberNamAndSurname = item.Value.nameAndSurname;
+                                rememberDateOfBirth = item.Value.dateOfBirth;
+
+                                populationList.Remove(item.Key);
+
+                                var citizenValue = (nameAndSurname: remeberNamAndSurname, dateOfBirth: rememberDateOfBirth);
+                                populationList.Add(newOib, citizenValue);
+
+                                Console.WriteLine("OIB stanovnika uspjesno ureden, ako zelite uredit jos jednog stanovnika napisite 'da'.");
+                                Console.WriteLine("Ako se zelite vratiti na izbornik uredivanja stisnite bilo koji botun.");
+                                userChoice = Console.ReadLine();
+
+                                if (userChoice is "da" || userChoice is "Da")
+                                    state = true;
+                                else
+                                    check = true;
+
+                                updateCheck = true;
+                                break;
+                            }
+                        }
+
+                    if (updateCheck is false && state is false && mainMenuCheck is false)
+                    {
+                        Console.WriteLine("OIB koji pretrazujete ne postoji na popisu.");
+                        Console.WriteLine("Ako zelite pokusat ponovno upisat neki OIB napisite 'da'.");
+                        Console.WriteLine("Ako se zelite vratiti na izbornik Uredivanja stisnite bilo koji drugi botun.");
+                        userChoice = Console.ReadLine();
+
+                        if (userChoice is "da" || userChoice is "Da")
+                            state = true;
+                        else
+                            check = true;
+                    }
+                }
+                else
+                    check = true;
+            } while (state is true);
+
+            return check;
+        }
     }
 
 }
