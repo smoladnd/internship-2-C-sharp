@@ -60,6 +60,7 @@ namespace Popis_stanovnika
                         UpdateCitizen(populationList);
                         break;
                     case "9":
+                        Statistics(populationList);
                         break;
                     case "0":
                         check = true;
@@ -933,6 +934,54 @@ namespace Popis_stanovnika
 
             return check;
         }
-    }
+    
+        static void Statistics(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool check;
 
+            do
+            {
+                check = false;
+                Console.WriteLine("1 - Postotak nezaposlenih (od 0 do 23 godine i od 65 do 100 godine) i postotak zaposlenih (od 23 do 65 godine)");
+                Console.WriteLine("2 - Ispis najčešćeg imena i koliko ga stanovnika ima");
+                Console.WriteLine("3 - Ispis najčešćeg prezimena i koliko ga stanovnika ima");
+                Console.WriteLine("4 - Ispis datum na koji je rođen najveći broj ljudi i koji je to datum");
+                Console.WriteLine("5 - Ispis broja ljudi rođenih u svakom od godišnjih doba (poredat godišnja doba s obzirom na broj ljudi rođenih u istim)");
+                Console.WriteLine("6 - Ispis najmlađeg stanovnika");
+                Console.WriteLine("7 - Ispis najstarijeg stanovnika");
+                Console.WriteLine("8 - Prosječan broj godina (na 2 decimale)");
+                Console.WriteLine("9 - Medijan godina");
+                Console.WriteLine("10 - vracanje a glavni izbornik");
+                var switchChoice = Console.ReadLine();
+
+                switch (switchChoice)
+                {
+                    case "1":
+                        break;
+                    case "2":
+                        break;
+                    case "3":
+                        break;
+                    case "4":
+                        break;
+                    case "5":
+                        break;
+                    case "6":
+                        break;
+                    case "7":
+                        break;
+                    case "8":
+                        break;
+                    case "9":
+                        break;
+                    case "10":
+                        break;
+                    default:
+                        Console.WriteLine("Unijeli ste nevaljanu opciju, pokusajte ponovno.");
+                        check = true;
+                        break;
+                }
+            } while (check is true);
+        }
+    }
 }
