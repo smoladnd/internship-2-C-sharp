@@ -553,6 +553,55 @@ namespace Popis_stanovnika
                             else
                                 break;
                         }
+                        else
+                        {
+                            Console.WriteLine("Postoji vise osoba sa tim imenom, prezimenom i datumom rodenja.");
+
+                            do
+                            {
+                                oibState = false;
+
+                                do
+                                {
+                                    Console.WriteLine("Molim vas prilozeti OIB trazene osobe.");
+                                    oib = Console.ReadLine();
+
+                                    oibState = CheckOib(oib);
+
+                                } while (oibState is true);
+
+                                foreach (var item in populationList)
+                                    if (item.Key == oib)
+                                    {
+                                        populationList.Remove(item.Key);
+                                        erasureCheck = true;
+
+                                        Console.WriteLine("Izbrisana je trazena osoba, ako zelite pokusat izbrisati jos jendnu osobu napisite 'da'.");
+                                        Console.WriteLine("Ako se zelite vratiti u pocetni izbornik stisnite bilo koji drugi botun.");
+                                        userChoice = Console.ReadLine();
+
+                                        if (userChoice is "da" || userChoice is "Da")
+                                            state = true;
+                                        else
+                                            state = false;
+                                    }
+
+                                if (erasureCheck is false)
+                                {
+                                    Console.WriteLine("Trazeni OIB ne postoji u popisu, ako zelite pokusat ponovno upisat OIB napisite 'OIB'.");
+                                    Console.WriteLine("Ako zelite pokusat izbrisati drugu osobu napisite 'da'.");
+                                    Console.WriteLine("Ako se zelite vratiti u pocetni izbornik stisnite bilo koji drugi botun.");
+                                    userChoice = Console.ReadLine();
+
+                                    if (userChoice is "da" || userChoice is "Da")
+                                        state = true;
+                                    else if (userChoice is "OIB" || userChoice is "oib")
+                                        oibState = true;
+                                    else
+                                        state = false;
+                                }
+                            } while (oibState is true);
+                        }
                     }
                 }
             } while (state is true);
