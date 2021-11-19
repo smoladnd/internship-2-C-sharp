@@ -525,7 +525,34 @@ namespace Popis_stanovnika
                             if (item.Value.nameAndSurname == nameSurname && item.Value.dateOfBirth == birthDateTime)
                                 countPeople++;
 
-                        
+                        if (countPeople is 0)
+                        {
+                            Console.WriteLine("Ne postoji osoba sa prilozenim imenom, prezimenom i datumom rodenja u popisu.");
+                            Console.WriteLine("Ako zelite pokusat izbrisati drugu osobu napisite 'da'.");
+                            Console.WriteLine("Ako se zelite vratiti u pocetni izbornik stisnite bilo koji drugi botun.");
+                            userChoice = Console.ReadLine();
+
+                            if (userChoice is "da" || userChoice is "Da")
+                                state = true;
+                            else
+                                break;
+
+                        }
+                        else if (countPeople is 1)
+                        {
+                            foreach (var item in populationList)
+                                if (item.Value.nameAndSurname == nameSurname && item.Value.dateOfBirth == birthDateTime)
+                                    populationList.Remove(item.Key);
+
+                            Console.WriteLine("Izbrisana je trazena osoba, ako zelite pokusat izbrisati jos jendnu osobu napisite 'da'.");
+                            Console.WriteLine("Ako se zelite vratiti u pocetni izbornik stisnite bilo koji drugi botun.");
+                            userChoice = Console.ReadLine();
+
+                            if (userChoice is "da" || userChoice is "Da")
+                                state = true;
+                            else
+                                break;
+                        }
                     }
                 }
             } while (state is true);
