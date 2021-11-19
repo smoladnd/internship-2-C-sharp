@@ -51,6 +51,7 @@ namespace Popis_stanovnika
                         EraseCitisenByOib(populationList);
                         break;
                     case "6":
+                        EraseCitisenByValue(populationList);
                         break;
                     case "7":
                         break;
@@ -479,6 +480,54 @@ namespace Popis_stanovnika
                         break;
                 }
                 
+            } while (state is true);
+
+        }
+
+        static void EraseCitisenByValue(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            bool state, boolBirthDate, oibState, erasureCheck = false;
+            var countPeople = 0;
+            string oib, nameSurname;
+
+            do
+            {
+                state = false;
+
+                Console.WriteLine("Ako ste sigurni u ovu radnju napisite 'da', ako se zelite vratiti na poetni izbornik stisnite bilo koju tipku.");
+                string userChoice = Console.ReadLine();
+
+                if (userChoice is "da" || userChoice is "Da")
+                {
+                    do
+                    {
+                        Console.WriteLine("Upisite ime i prezime osobe koju trazite.");
+                        nameSurname = Console.ReadLine();
+
+                        state = CheckNameAndSurname(nameSurname);
+                    } while (state is true);
+
+                    if (state is false)
+                    {
+                        string birthTimeString;
+                        do
+                        {
+                            Console.WriteLine("Upisite datum rodenja trazene osobe, molio bih vas da se drzite ovog formata: YYYY-MM-DD");
+                            birthTimeString = (Console.ReadLine());
+
+                            boolBirthDate = CheckDateOfBirth(birthTimeString);
+
+                        } while (boolBirthDate == true);
+
+                        DateTime birthDateTime = Convert.ToDateTime(birthTimeString);
+
+                        foreach (var item in populationList)
+                            if (item.Value.nameAndSurname == nameSurname && item.Value.dateOfBirth == birthDateTime)
+                                countPeople++;
+
+                        
+                    }
+                }
             } while (state is true);
 
         }
