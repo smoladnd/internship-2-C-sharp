@@ -966,6 +966,7 @@ namespace Popis_stanovnika
                         check = MostCommonSurname(check, populationList);
                         break;
                     case "4":
+                        check = MostCommonDateOfBirth(check, populationList);
                         break;
                     case "5":
                         break;
@@ -1087,5 +1088,38 @@ namespace Popis_stanovnika
 
             return check = true;
         }
+
+        static bool MostCommonDateOfBirth(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int counterMostUsedDateOfBirth = 0;
+            var dateOfBirthCounter = new Dictionary<string, int> { { "surame", 0 } };
+            DateTime dateOfBirthHolder;
+
+            foreach (var item in populationList)
+            {
+                dateOfBirthHolder = item.Value.dateOfBirth;
+                string holdDate = Convert.ToString(dateOfBirthHolder);
+
+                if (dateOfBirthCounter.ContainsKey(holdDate))
+                    dateOfBirthCounter[holdDate]++;
+                else
+                    dateOfBirthCounter.Add(holdDate, 1);
+            }
+
+            foreach (var item in dateOfBirthCounter)
+            {
+                if (item.Value > counterMostUsedDateOfBirth)
+                    counterMostUsedDateOfBirth = item.Value;
+            }
+
+            foreach (var item in dateOfBirthCounter)
+                if (item.Value == counterMostUsedDateOfBirth)
+                {
+                    Console.WriteLine($"{item.Key} {item.Value}");
+                }
+
+            return check = true;
+        }
+
     }
 }
