@@ -946,12 +946,12 @@ namespace Popis_stanovnika
                 Console.WriteLine("2 - Ispis najčešćeg imena i koliko ga stanovnika ima");
                 Console.WriteLine("3 - Ispis najčešćeg prezimena i koliko ga stanovnika ima");
                 Console.WriteLine("4 - Ispis datum na koji je rođen najveći broj ljudi i koji je to datum");
-                Console.WriteLine("5 - Ispis broja ljudi rođenih u svakom od godišnjih doba (poredat godišnja doba s obzirom na broj ljudi rođenih u istim)");
+                Console.WriteLine("5 - Ispis broja ljudi rođenih u svakom od godišnjih doba");
                 Console.WriteLine("6 - Ispis najmlađeg stanovnika");
                 Console.WriteLine("7 - Ispis najstarijeg stanovnika");
-                Console.WriteLine("8 - Prosječan broj godina (na 2 decimale)");
+                Console.WriteLine("8 - Prosječan broj godina");
                 Console.WriteLine("9 - Medijan godina");
-                Console.WriteLine("10 - vracanje a glavni izbornik");
+                Console.WriteLine("10 - vracanje na glavni izbornik");
                 var switchChoice = Console.ReadLine();
 
                 switch (switchChoice)
@@ -995,6 +995,7 @@ namespace Popis_stanovnika
                         check = AverageAge(check, populationList);
                         break;
                     case "9":
+                        check = MedijanYear(check, populationList);
                         break;
                     case "10":
                         break;
@@ -1193,6 +1194,42 @@ namespace Popis_stanovnika
             string twoDecimals = averageAge.ToString("00.00");
 
             Console.WriteLine("Prosjek godina ljudi u popisu je: " + twoDecimals);
+
+            return check = true;
+        }
+
+        static bool MedijanYear(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int medijanYear, smallerYear, largerYear;
+
+            var sortedDictionaryAscending = from entry in populationList orderby entry.Value.dateOfBirth ascending select entry;
+            List<int> yearBorn = new List<int>();
+
+            foreach (var item in sortedDictionaryAscending)
+                yearBorn.Add(item.Value.dateOfBirth.Year);
+
+            medijanYear = yearBorn[0];
+
+            do
+            {
+                medijanYear++;
+                smallerYear = 0;
+                largerYear = 0;
+
+                foreach (var item in yearBorn)
+                {
+                    if (item < medijanYear)
+                        smallerYear++;
+                    if (item > medijanYear)
+                        largerYear++;
+                }
+
+                if (smallerYear == largerYear)
+                    break;
+
+            } while (smallerYear != largerYear);
+
+            Console.WriteLine("Medijan godina je: " + medijanYear);
 
             return check = true;
         }
