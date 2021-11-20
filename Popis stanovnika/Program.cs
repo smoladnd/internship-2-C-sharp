@@ -36,13 +36,13 @@ namespace Popis_stanovnika
                 switch (userChoice)
                 {
                     case "1":
-                        IspisStanovnistva(populationList);
+                        PrintOutPopulation(populationList);
                         break;
                     case "2":
-                        IspisPoOibu(populationList);
+                        PrintOutCitisenThroughOib(populationList);
                         break;
                     case "3":
-                        IspisPoImenu(populationList);
+                        PrintOutCitisenThroughValue(populationList);
                         break;
                     case "4":
                         AddCitisen(populationList);
@@ -172,7 +172,7 @@ namespace Popis_stanovnika
             return boolBirthDate;
         }
 
-        static void IspisStanovnistva(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        static void PrintOutPopulation(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
             string returnChoice;
             bool state = false;
@@ -221,7 +221,7 @@ namespace Popis_stanovnika
 
         }
 
-        static void IspisPoOibu(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        static void PrintOutCitisenThroughOib(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
             bool OIBState, x = false;
           
@@ -239,7 +239,7 @@ namespace Popis_stanovnika
                         {
                             if (item.Key == oib)
                             {
-                                Console.WriteLine($"{item.Key} {item.Value}");
+                                Console.WriteLine("Trazena osoba je: " + item.Value);
                                 Console.WriteLine("Zelite li pretraziti jos jednu osobu? Ako zelite upisite da!");
                                 Console.WriteLine("Ako ne zelite stisnite bilo koju tipku.");
                                 string useOptionAgain = Console.ReadLine();
@@ -265,7 +265,7 @@ namespace Popis_stanovnika
 
         }
 
-        static void IspisPoImenu(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        static void PrintOutCitisenThroughValue(Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
         {
 
             bool state, boolBirthDate = false, checkOutput = false;
@@ -297,7 +297,7 @@ namespace Popis_stanovnika
                         foreach (var item in populationList)
                             if (item.Value.nameAndSurname == nameSurname && item.Value.dateOfBirth == birthDateTime)
                             {
-                                Console.WriteLine($"{item.Key}");
+                                Console.WriteLine("Trazeni OIB je: " + item.Key);
                                 checkOutput = true;
                             }
 
@@ -1071,7 +1071,7 @@ namespace Popis_stanovnika
             foreach (var item in nameCounter)
                 if (item.Value == counterMostUsedName)
                 {
-                    Console.WriteLine($"{item.Key} {item.Value}");
+                    Console.WriteLine("Najcesce ime u popisu je " + item.Key + " , a pojavljuje se " + item.Value + " puta.");
                 }
 
             return check = true;
@@ -1102,7 +1102,7 @@ namespace Popis_stanovnika
             foreach (var item in surnameCounter)
                 if (item.Value == counterMostUsedSurname)
                 {
-                    Console.WriteLine($"{item.Key} {item.Value}");
+                    Console.WriteLine("Najcesce prezime u popisu je" + item.Key + " , a pojavljuje se " + item.Value + " puta.");
                 }
 
             return check = true;
@@ -1134,7 +1134,7 @@ namespace Popis_stanovnika
             foreach (var item in dateOfBirthCounter)
                 if (item.Value == counterMostUsedDateOfBirth)
                 {
-                    Console.WriteLine($"{item.Key} {item.Value}");
+                    Console.WriteLine("Najcesci datum rodenja u popisu je " + item.Key + " , a pojavljuje se " + item.Value + " puta.");
                 }
 
             return check = true;
