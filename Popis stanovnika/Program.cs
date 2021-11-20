@@ -972,8 +972,24 @@ namespace Popis_stanovnika
                         check = SeasonalDateOfBirth(check, populationList);
                         break;
                     case "6":
+                        var sortedDictionaryDescending = from entry in populationList orderby entry.Value.dateOfBirth descending select entry;
+                        foreach (var item in sortedDictionaryDescending)
+                        {
+                            Console.WriteLine("Najmladi stanovnik je:");
+                            Console.WriteLine($"{item.Key} {item.Value}");
+                            break;
+                        }
+                        check = true;
                         break;
                     case "7":
+                        var sortedDictionaryAscending = from entry in populationList orderby entry.Value.dateOfBirth ascending select entry;
+                        foreach (var item in sortedDictionaryAscending)
+                        {
+                            Console.WriteLine("Najstariji stanovnik je:");
+                            Console.WriteLine($"{item.Key} {item.Value}");
+                            break;
+                        }
+                        check = true;
                         break;
                     case "8":
                         break;
