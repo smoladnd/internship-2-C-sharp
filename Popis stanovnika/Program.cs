@@ -960,6 +960,7 @@ namespace Popis_stanovnika
                         check = WorkForcePersentage(check, populationList);
                         break;
                     case "2":
+                        check = MostCommonName(check, populationList);
                         break;
                     case "3":
                         break;
@@ -1020,6 +1021,37 @@ namespace Popis_stanovnika
             Console.WriteLine("Postotak nezaposlenih od 0 do 23 godine je " + countMinor / countAll * 100 + "%");
             Console.WriteLine("Postotak zaposlenih od 23 do 65 godine je " + countMiddle / countAll * 100 + "%");
             Console.WriteLine("Postotak nezaposlenih od 65 do 100 godine je " + countSenior / countAll * 100 + "%");
+
+            return check = true;
+        }
+
+        static bool MostCommonName(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int counterMostUsedName = 0;
+            var nameCounter = new Dictionary<string, int> { { "name", 0 } };
+            string nameHolder;
+
+            foreach (var item in populationList)
+            {
+                nameHolder = item.Value.nameAndSurname.Substring(0, item.Value.nameAndSurname.IndexOf(" "));
+
+                if (nameCounter.ContainsKey(nameHolder))
+                    nameCounter[nameHolder]++;
+                else
+                    nameCounter.Add(nameHolder, 1);
+            }
+
+            foreach (var item in nameCounter)
+            {
+                if (item.Value > counterMostUsedName)
+                    counterMostUsedName = item.Value;
+            }
+
+            foreach (var item in nameCounter)
+                if (item.Value == counterMostUsedName)
+                {
+                    Console.WriteLine($"{item.Key} {item.Value}");
+                }
 
             return check = true;
         }
