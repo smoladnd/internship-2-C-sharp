@@ -969,6 +969,7 @@ namespace Popis_stanovnika
                         check = MostCommonDateOfBirth(check, populationList);
                         break;
                     case "5":
+                        check = SeasonalDateOfBirth(check, populationList);
                         break;
                     case "6":
                         break;
@@ -1121,5 +1122,38 @@ namespace Popis_stanovnika
             return check = true;
         }
 
+        static bool SeasonalDateOfBirth(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int month, day;
+            var seasons = new Dictionary<string, int>
+            {
+                {"Proljece", 0},
+                {"Ljeto", 0},
+                {"Jesen", 0},
+                {"Zima", 0}
+            };
+
+            foreach (var item in populationList)
+            {
+                month = item.Value.dateOfBirth.Month;
+                day = item.Value.dateOfBirth.Day;
+
+                if ((month is 3 && day >= 21) || month is 4 || month is 5 || (month is 6 && day < 21))
+                    seasons["Proljece"]++;
+                else if ((month is 6 && day >= 21) || month is 7 || month is 8 || (month is 9 && day < 23))
+                    seasons["Ljeto"]++;
+                else if ((month is 9 && day >= 23) || month is 10 || month is 11 || (month is 12 && day < 21))
+                    seasons["Jesen"]++;
+                else
+                    seasons["Zima"]++;
+            }
+
+            var sortedDictionaryDescending = from entry in seasons orderby entry.Value descending select entry;
+
+            foreach (var item in sortedDictionaryDescending)
+                Console.WriteLine($"{item.Key} {item.Value}");
+
+            return check = true;
+        }
     }
 }
