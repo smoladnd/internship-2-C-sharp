@@ -992,6 +992,7 @@ namespace Popis_stanovnika
                         check = true;
                         break;
                     case "8":
+                        check = AverageAge(check, populationList);
                         break;
                     case "9":
                         break;
@@ -1168,6 +1169,30 @@ namespace Popis_stanovnika
 
             foreach (var item in sortedDictionaryDescending)
                 Console.WriteLine($"{item.Key} {item.Value}");
+
+            return check = true;
+        }
+
+        static bool AverageAge(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int year, yearSum = 0, thisYear;
+            decimal  peopleCounter = 0, averageAge;
+            DateTime now = DateTime.Now;
+
+            thisYear = now.Year;
+            foreach (var item in populationList)
+            {
+                year = item.Value.dateOfBirth.Year;
+
+                yearSum += (thisYear - year);
+
+                peopleCounter++;
+            }
+
+            averageAge = yearSum / peopleCounter;
+            string twoDecimals = averageAge.ToString("00.00");
+
+            Console.WriteLine("Prosjek godina ljudi u popisu je: " + twoDecimals);
 
             return check = true;
         }
