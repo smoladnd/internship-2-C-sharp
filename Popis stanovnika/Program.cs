@@ -963,6 +963,7 @@ namespace Popis_stanovnika
                         check = MostCommonName(check, populationList);
                         break;
                     case "3":
+                        check = MostCommonSurname(check, populationList);
                         break;
                     case "4":
                         break;
@@ -1049,6 +1050,37 @@ namespace Popis_stanovnika
 
             foreach (var item in nameCounter)
                 if (item.Value == counterMostUsedName)
+                {
+                    Console.WriteLine($"{item.Key} {item.Value}");
+                }
+
+            return check = true;
+        }
+    
+        static bool MostCommonSurname(bool check, Dictionary<string, (string nameAndSurname, DateTime dateOfBirth)> populationList)
+        {
+            int counterMostUsedSurname = 0;
+            var surnameCounter = new Dictionary<string, int> { { "surame", 0 } };
+            string surnameHolder;
+
+            foreach (var item in populationList)
+            {
+                surnameHolder = item.Value.nameAndSurname.Substring(item.Value.nameAndSurname.IndexOf(" "));
+
+                if (surnameCounter.ContainsKey(surnameHolder))
+                    surnameCounter[surnameHolder]++;
+                else
+                    surnameCounter.Add(surnameHolder, 1);
+            }
+
+            foreach (var item in surnameCounter)
+            {
+                if (item.Value > counterMostUsedSurname)
+                    counterMostUsedSurname = item.Value;
+            }
+
+            foreach (var item in surnameCounter)
+                if (item.Value == counterMostUsedSurname)
                 {
                     Console.WriteLine($"{item.Key} {item.Value}");
                 }
